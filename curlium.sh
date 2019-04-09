@@ -1,5 +1,6 @@
 # vim: set ft=zsh:
 alias ccurl="curl -H 'User-Agent: selenium/3.141.0 (ruby macosx)' -H 'Content-Type: application/json'"
+
 open_url(){
   url=${1:=http://google.com}
   [[ $url == http* ]] || url=http://$url
@@ -14,19 +15,45 @@ get_url(){
 
 start_session(){
   local caps
-  while getopts ':b:v:' arg; do
-    case $arg in
-      b) local browserName
-        browserName=$OPTARG
-        ;;
-      v) local browser_version
-        browser_version=$OPTARG
-        ;;
-    esac
+
+  #while getopts ':b:v:' arg; do
+    #case $arg in
+      #b) local browserName
+        #browserName=$OPTARG
+        #;;
+      #v) local browser_version
+        #browser_version=$OPTARG
+        #;;
+    #esac
+  #done
+
+  caps='{"desiredCapabilities": { "build":"mohit console logs", "browserstack.idleTimeout":300'
+  while [ $# -gt 0 ]
+  do
+    opt=$1
+    case $opt in
+       "-b")
+         shift ;
+         optrg=$1 ;
+         local browserName
+         browserName=$optrg
+         caps+=",\"browserName\":\"$browserName\"";;
+       "-bv")
+         shift ;
+         optrg=$1 ;
+         local browser_version
+         browser_version=$optrg
+         caps+=",\"browser_version\":\"$browser_version\"";;
+       "-sv")
+         shift ;
+         optrg=$1 ;
+         local selenium_version
+         selenium_version=$optrg
+         [[ -n $selenium_version ]] && caps+=",\"browserstack.selenium_version\":\"$selenium_version\""
+         print "Parameter : $opt Value : $optrg" ;;
+     esac
+     shift
   done
-  caps='{"desiredCapabilities": { "build":"mohit console logs", "browserstack.idleTimeout":30'
-  [[ -n $browserName ]] && caps+=",\"browserName\":\"$browserName\""
-  [[ -n $browser_version ]] && caps+=",\"browser_version\":\"$browser_version\""
   caps+='}}'
   #desiredCapabilities=$(jo device='iPad Pro 12.9' realMobile=true)
   echo $caps
@@ -38,7 +65,7 @@ start_session(){
 
 get_windows(){
   echoe "\n$sessionId: getting window handles "
-  ccurl $URL/session/$sessionId/window_handles
+  ccurl $URL/session/$sessionId/window/handles
 }
 
 switch_window(){
@@ -49,7 +76,7 @@ switch_window(){
 }
 
 page_source(){
-  echo "\n$sessionId: getting page source"
+  echoe "\n$sessionId: getting page source"
   ccurl $URL/session/$sessionId/source
 }
 
