@@ -1,5 +1,5 @@
 # vim: set ft=zsh:
-alias ccurl="curl -H 'User-Agent: selenium/3.141.0 (ruby macosx)' -H 'Content-Type: application/json'"
+alias ccurl="curl -H 'User-Agent: selenium/0.0.1 (curlium)' -H 'Content-Type: application/json'"
 
 open_url(){
   url=${1:=http://google.com}
@@ -27,7 +27,7 @@ start_session(){
     #esac
   #done
 
-  caps='{"desiredCapabilities": { "build":"mohit console logs", "browserstack.idleTimeout":300'
+  caps='{"desiredCapabilities": { "build":"curlium", "browserstack.idleTimeout":2'
   while [ $# -gt 0 ]
   do
     opt=$1
