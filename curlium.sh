@@ -121,6 +121,20 @@ execute_script(){
   ccurl $URL/session/$sessionId/execute -d $json_string
 }
 
+moveto(){
+  local json_string
+  json_string=$(jo element=$1)
+  echo $json_string
+  ccurl $URL/session/$sessionId/moveto -d $json_string
+}
+
+movetooffset(){
+  local json_string
+  json_string=$(jo xoffset=$1 yoffset=$2)
+  echo $json_string
+  ccurl $URL/session/$sessionId/moveto -d $json_string
+}
+
 execute_script_sync(){
   local json_string
   json_string=$(jo script=$1 args="[]")
