@@ -111,6 +111,14 @@ execute_script_sync(){
   echo $json_string
   ccurl $URL/session/$sessionId/execute/sync -d "$json_string"
 }
+
+set_value(){
+  ccurl -X POST $URL/session/$sessionId/element/$1/value -d '{"id":"'$1'","value":["'$2'"]}'
+}
+
+get_value(){
+  ccurl -X GET $URL/session/$sessionId/element/$1/attribute/value
+}
 #curl -X POST $URL/session/$s_id/url -d '{"url":"http://www.google.com"}'
 #curl -X POST $URL/session/$s_id/element -d '{"using":"name","value":"q"}'
 #curl -X POST $URL/$s_id/element/0/value -d {"value":["selenium"]}
