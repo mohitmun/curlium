@@ -44,6 +44,12 @@ start_session(){
          local browser_version
          browser_version=$optrg
          caps+=",\"browser_version\":\"$browser_version\"";;
+       "-ov")
+         shift ;
+         optrg=$1 ;
+         local os_version
+         os_version=$optrg
+         caps+=",\"os_version\":\"$os_version\"";;
        "-sv")
          shift ;
          optrg=$1 ;
