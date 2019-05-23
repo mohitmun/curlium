@@ -101,12 +101,12 @@ page_source_for(){
 
 find_element_css(){
   #ccurl -X POST $URL/session/$sessionId/element -d '{"using":"css selector","value":"'$1'"}' 
-  find_element "css selector" $1
+  find_element "css selector" $1 | jq .value
 }
 
 find_element(){
-  echo '{"using":"'$1'","value":"'$2'"}' 
-  ccurl -X POST $URL/session/$sessionId/element -d '{"using":"'$1'","value":"'$2'"}' 
+  echoe '{"using":"'$1'","value":"'$2'"}'
+  ccurl -X POST $URL/session/$sessionId/element -d '{"using":"'$1'","value":"'$2'"}'  | jq .value.ELEMENT
 }
 find_element_xpath(){
   #ccurl -X POST $URL/session/$sessionId/element -d '{"using":"xpath","value":"'$1'"}' 
