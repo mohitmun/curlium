@@ -157,6 +157,10 @@ set_value(){
 get_value(){
   ccurl -X GET $URL/session/$sessionId/element/$1/attribute/value
 }
+
+get_title(){
+  ccurl -X GET $URL/session/$sessionId/title | jq .value
+}
 #curl -X POST $URL/session/$s_id/url -d '{"url":"http://www.google.com"}'
 #curl -X POST $URL/session/$s_id/element -d '{"using":"name","value":"q"}'
 #curl -X POST $URL/$s_id/element/0/value -d {"value":["selenium"]}
