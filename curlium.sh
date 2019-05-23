@@ -1,5 +1,7 @@
 # vim: set ft=zsh:
 alias ccurl="curl -H 'User-Agent: selenium/0.0.1 (curlium)' -H 'Content-Type: application/json'"
+alias jq="jq -r"
+alias echoe="echo >&2"
 
 open_url(){
   url=${1:=http://google.com}
