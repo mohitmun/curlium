@@ -29,7 +29,7 @@ start_session(){
     #esac
   #done
 
-  caps='{"desiredCapabilities": { "build":"curlium", "browserstack.idleTimeout":2'
+  caps='{"desiredCapabilities": { "build":"curlium"'
   while [ $# -gt 0 ]
   do
     opt=$1
