@@ -50,6 +50,12 @@ start_session(){
          local os_version
          os_version=$optrg
          caps+=",\"os_version\":\"$os_version\"";;
+       "-o")
+         shift ;
+         optrg=$1 ;
+         local os
+         os=$optrg
+         caps+=",\"os\":\"$os\"";;
        "-sv")
          shift ;
          optrg=$1 ;
