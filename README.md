@@ -21,3 +21,14 @@ export URL=http://$BROWSERSTACK_USER:$BROWSERSTACK_ACCESS_KEY@hub.browserstack.c
 
 either you can commands directly from shell or write shell script like following
 
+```
+source ./curlium.sh
+;qa
+start_session -b ie -bv 11 -ov 10 -o windows # -b is browser, -bv is browser_version, -ov is os_version 
+open_url "google.com"
+element=$(find_element name q)
+set_value $element "Browserstack\n"
+get_title
+stop_session
+```
+
