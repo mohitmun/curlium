@@ -29,7 +29,7 @@ start_session(){
     #esac
   #done
 
-  caps='{"desiredCapabilities": { "build":"curlium"'
+  caps='{"desiredCapabilities": {'
   while [ $# -gt 0 ]
   do
     opt=$1
@@ -39,7 +39,7 @@ start_session(){
          optrg=$1 ;
          local browserName
          browserName=$optrg
-         caps+=",\"browserName\":\"$browserName\"";;
+         caps+="\"browserName\":\"$browserName\"";;
        "-bv")
          shift ;
          optrg=$1 ;
@@ -52,6 +52,12 @@ start_session(){
          local os_version
          os_version=$optrg
          caps+=",\"os_version\":\"$os_version\"";;
+       "-build")
+         shift ;
+         optrg=$1 ;
+         local build
+         build=$optrg
+         caps+=",\"build\":\"$build\"";;
        "-o")
          shift ;
          optrg=$1 ;
@@ -71,7 +77,7 @@ start_session(){
   caps+='}}'
   #desiredCapabilities=$(jo device='iPad Pro 12.9' realMobile=true)
   echo $caps
-  ccurl -X POST $URL/session -d "$caps" | tee /dev/tty | jq -r .sessionId | read sessionId
+  sessionId=$(ccurl -X POST $URL/session -d "$caps" | tee /dev/tty | jq -r .sessionId)
   echo "\nsession started $sessionId"
   #"browserstack.console":"info","acceptSslCert":false,"detected_language":"selenium/3.14.0 (ruby macosx)"}}
   #"browserstack.idleTimeout":300,
