@@ -29,52 +29,60 @@ start_session(){
     #esac
   #done
 
-  caps='{"desiredCapabilities": {'
-  while [ $# -gt 0 ]
-  do
-    opt=$1
-    case $opt in
-       "-b")
-         shift ;
-         optrg=$1 ;
-         local browserName
-         browserName=$optrg
-         caps+="\"browserName\":\"$browserName\"";;
-       "-bv")
-         shift ;
-         optrg=$1 ;
-         local browser_version
-         browser_version=$optrg
-         caps+=",\"browser_version\":\"$browser_version\"";;
-       "-ov")
-         shift ;
-         optrg=$1 ;
-         local os_version
-         os_version=$optrg
-         caps+=",\"os_version\":\"$os_version\"";;
-       "-build")
-         shift ;
-         optrg=$1 ;
-         local build
-         build=$optrg
-         caps+=",\"build\":\"$build\"";;
-       "-o")
-         shift ;
-         optrg=$1 ;
-         local os
-         os=$optrg
-         caps+=",\"os\":\"$os\"";;
-       "-sv")
-         shift ;
-         optrg=$1 ;
-         local selenium_version
-         selenium_version=$optrg
-         [[ -n $selenium_version ]] && caps+=",\"browserstack.selenium_version\":\"$selenium_version\""
-         print "Parameter : $opt Value : $optrg" ;;
-     esac
-     shift
-  done
-  caps+='}}'
+  if [ $# -gt 0 -a $1 == '-json' ]
+  then
+    shift ;
+    caps=$1
+    echoe caps
+    shift ;
+  else
+    caps='{"desiredCapabilities": {'
+    while [ $# -gt 0 ]
+    do
+      opt=$1
+      case $opt in
+        "-b")
+          shift ;
+          optrg=$1 ;
+          local browserName
+          browserName=$optrg
+          caps+="\"browserName\":\"$browserName\"";;
+        "-bv")
+          shift ;
+          optrg=$1 ;
+          local browser_version
+          browser_version=$optrg
+          caps+=",\"browser_version\":\"$browser_version\"";;
+        "-ov")
+          shift ;
+          optrg=$1 ;
+          local os_version
+          os_version=$optrg
+          caps+=",\"os_version\":\"$os_version\"";;
+        "-build")
+          shift ;
+          optrg=$1 ;
+          local build
+          build=$optrg
+          caps+=",\"build\":\"$build\"";;
+        "-o")
+          shift ;
+          optrg=$1 ;
+          local os
+          os=$optrg
+          caps+=",\"os\":\"$os\"";;
+        "-sv")
+          shift ;
+          optrg=$1 ;
+          local selenium_version
+          selenium_version=$optrg
+          [[ -n $selenium_version ]] && caps+=",\"browserstack.selenium_version\":\"$selenium_version\""
+          print "Parameter : $opt Value : $optrg" ;;
+      esac
+      shift
+    done
+    caps+='}}'
+  fi
   #desiredCapabilities=$(jo device='iPad Pro 12.9' realMobile=true)
   echo $caps
   sessionId=$(ccurl -X POST $URL/session -d "$caps" | tee /dev/tty | jq -r .sessionId)
